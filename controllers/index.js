@@ -1,3 +1,5 @@
 module.exports = {
-    lotTraits: require('./lotTraitsCtrl')
+    lotTraits: require('./lotTraitsCtrl'),
+    packCtrl: require('./packCtrl'),
+    simTraits: require('./simsTraitsCtrl')
 }

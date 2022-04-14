@@ -1,11 +1,10 @@
 const router = require('express').Router();
+const {packCtrl} = require("../controllers")
+console.log(packCtrl)
 
-// "/", GET, gets all the packs
-// "/:name", GET, gets a specific pack
-
-// router.use('/',)
-// router.use('/random')
-// router.use('/:name)
+router.get('/', packCtrl.getAllPacks)
+router.get('/r', packCtrl.getRandomPack)
+router.get('/:name', packCtrl.getOnePack)
 
 
 module.exports = router;

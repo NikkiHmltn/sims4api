@@ -20,13 +20,14 @@ const getAllLotTraits = (req, res) => {
 
 const getPackLotTraits = (req, res) => {
     try {
-        let packName = req.params.pack
-        db.Pack.find({"lot_traits.$.pack": packName})
+        let rawName = req.params.pack.toLowerCase()
+        let cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1)
+        db.Pack.find({"lot_traits.$.pack": cleanName})
         .then(packs => {
             let traitsArr = []
             packs.map(pack => {
                 lotTraits = pack.lot_traits
-                if(lotTraits.length && lotTraits[0].pack.includes(packName)) traitsArr.push(lotTraits)
+                if(lotTraits.length && lotTraits[0].pack.includes(cleanName)) traitsArr.push(lotTraits)
             })
             dbSuccess(res, traitsArr.flat(), "Successful find of traits for a pack")
         })
@@ -37,10 +38,11 @@ const getPackLotTraits = (req, res) => {
 
 const getSpecificLotTrait = (req, res) => {
     try {
-        let traitName = req.params.traitName
-        db.Pack.find({"lot_traits.trait": traitName})
+        let rawName = req.params.traitName.toLowerCase()
+        let cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1)
+        db.Pack.find({"lot_traits.trait": cleanName})
         .then(pack => {
-            let trait = pack[0].lot_traits.find(t => t.trait === traitName)
+            let trait = pack[0].lot_traits.find(t => t.trait === cleanName)
             dbSuccess(res, trait, "Successful find of unique trait")
         })
         .catch(err => dbFail(res, err))
@@ -66,7 +68,6 @@ const getRandomLotTrait = async (req, res) => {
             for (let i=0; i < randPacks.length; i++){
                 let randNumber = Math.floor(Math.random() * randPacks[i].lot_traits.length)
                 let packTrait = randPacks[i].lot_traits[randNumber]
-                console.log(packTrait, "PACK TRAIT")
                 traits.push(packTrait)
             }   
             return dbSuccess(res, traits, 'Random Traits Found')
@@ -108,14 +109,15 @@ const getAllLotChallenges = (req, res) => {
 
 const getPackLotChallenges = (req, res) => {
     try {
-        let packName = req.params.pack
-        db.Pack.find({"lot_challenges.$.pack": packName})
+        let rawName = req.params.pack.toLowerCase()
+        let cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1)
+        db.Pack.find({"lot_challenges.$.pack": cleanName})
         .then(packs => {
             
             let challengeArr = []
             packs.map(pack => {
                 lotChallenges = pack.lot_challenges
-                if(lotChallenges.length && lotChallenges[0].pack.includes(packName)){ challengeArr.push(lotChallenges)}
+                if(lotChallenges.length && lotChallenges[0].pack.includes(cleanName)){ challengeArr.push(lotChallenges)}
             })
             dbSuccess(res, challengeArr.flat(), "Successful find of traits for a pack")
         })
@@ -155,7 +157,6 @@ const getRandomLotChallenge = async (req, res) => {
             for (let i=0; i < randPacks.length; i++){
                 let randNumber = Math.floor(Math.random() * randPacks[i].lot_challenges.length)
                 let packTrait = randPacks[i].lot_challenges[randNumber]
-                console.log(packTrait, "PACK TRAIT")
                 traits.push(packTrait)
             }   
             return dbSuccess(res, traits, 'Random Traits Found')
@@ -167,7 +168,6 @@ const getRandomLotChallenge = async (req, res) => {
             ] 
             )
         .then(pack => {
-            console.log(pack)
             let traitArr = pack[0].lot_challenges
             let randNumber = Math.floor(Math.random() * traitArr.length)
             let trait = traitArr[randNumber]
