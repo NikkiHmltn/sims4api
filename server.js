@@ -7,12 +7,13 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 const routes = require('./routes')
+const apiCheck = require('./middleware/checkKey')
 
 app.use("/test", (req, res) =>{
     res.send("Test")
 })
 
-app.use("/api/v1", routes)
+app.use("/api/v1", apiCheck.checkValidKey, routes)
 
 app.use((req,res) => {
     res.status(404).json({message: "Not a proper route."})

@@ -1,12 +1,17 @@
 const router = require('express').Router();
-const {getAllLotTraits, getPackLotTraits, getSpecificLotTrait} = require('../controllers')
-// "/", GET, gets all the lot traits
-// "/:pack", GET, gets all lot traits from that pack
-// "/:traitName", GET, gets a specific lot trait
+const {lotTraits} = require('../controllers')
 
+// ====== Lot Traits ====== //
+router.get('/', lotTraits.getAllLotTraits)
+router.get('/random', lotTraits.getRandomLotTrait)
+router.get('/t/p/:pack', lotTraits.getPackLotTraits)
+router.get('/t/:traitName', lotTraits.getSpecificLotTrait)
 
-router.use('/', getAllLotTraits)
-router.use('/:pack', getPackLotTraits)
-router.use(':traitName', getSpecificLotTrait)
+// ====== Lot Challenges ====== //
+router.get('/c', lotTraits.getAllLotChallenges)
+router.get('/c/random', lotTraits.getRandomLotChallenge)
+router.get('/c/p/:pack', lotTraits.getPackLotChallenges)
+router.get('/c/:challengeName', lotTraits.getSpecificLotChallenge)
+
 
 module.exports = router;

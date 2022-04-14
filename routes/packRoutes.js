@@ -4,6 +4,8 @@ const router = require('express').Router();
 // "/:name", GET, gets a specific pack
 
 // router.use('/',)
+// router.use('/random')
 // router.use('/:name)
+
 
 module.exports = router;
