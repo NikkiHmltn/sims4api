@@ -2,9 +2,9 @@ const db = require('../models')
 
 // ========== Strict Lot Traits Queries ============ //
 
-const getAllLotTraits = (req, res) => {
+const getAllLotTraits = async (req, res) => {
     try {
-        db.Pack.find()
+        await db.Pack.find()
         .then(packs => {
             let traitsArr = []
             packs.map(pack => {
@@ -18,11 +18,11 @@ const getAllLotTraits = (req, res) => {
     } catch (err) {catchFail(res, err)}
 }
 
-const getPackLotTraits = (req, res) => {
+const getPackLotTraits = async (req, res) => {
     try {
         let rawName = req.params.pack.toLowerCase()
-        let cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1)
-        db.Pack.find({"lot_traits.$.pack": cleanName})
+        const cleanName = rawName.split(' ').map(capitalize).join(' ')
+        await db.Pack.find({"lot_traits.$.pack": cleanName})
         .then(packs => {
             let traitsArr = []
             packs.map(pack => {
@@ -36,11 +36,11 @@ const getPackLotTraits = (req, res) => {
     } catch (err) {catchFail(res, err)}
 }
 
-const getSpecificLotTrait = (req, res) => {
+const getSpecificLotTrait = async (req, res) => {
     try {
         let rawName = req.params.traitName.toLowerCase()
-        let cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1)
-        db.Pack.find({"lot_traits.trait": cleanName})
+        const cleanName = rawName.split(' ').map(capitalize).join(' ')
+        await db.Pack.find({"lot_traits.trait": cleanName})
         .then(pack => {
             let trait = pack[0].lot_traits.find(t => t.trait === cleanName)
             dbSuccess(res, trait, "Successful find of unique trait")
@@ -91,9 +91,9 @@ const getRandomLotTrait = async (req, res) => {
 
 // ========== Strict Lot Challenges Queries ============ //
 
-const getAllLotChallenges = (req, res) => {
+const getAllLotChallenges = async (req, res) => {
     try {
-        db.Pack.find()
+        await db.Pack.find()
         .then(packs => {
             let challengeArr = []
             packs.map(pack => {
@@ -107,13 +107,12 @@ const getAllLotChallenges = (req, res) => {
     } catch (err) {catchFail(res, err)}
 }
 
-const getPackLotChallenges = (req, res) => {
+const getPackLotChallenges = async (req, res) => {
     try {
         let rawName = req.params.pack.toLowerCase()
-        let cleanName = rawName.charAt(0).toUpperCase() + rawName.slice(1)
-        db.Pack.find({"lot_challenges.$.pack": cleanName})
+        const cleanName = rawName.split(' ').map(capitalize).join(' ')
+        await db.Pack.find({"lot_challenges.$.pack": cleanName})
         .then(packs => {
-            
             let challengeArr = []
             packs.map(pack => {
                 lotChallenges = pack.lot_challenges
@@ -128,10 +127,11 @@ const getPackLotChallenges = (req, res) => {
 
 const getSpecificLotChallenge = (req, res) => {
     try {
-        let challengeName = req.params.challengeName
-        db.Pack.find({"lot_challenges.trait": challengeName})
+        let rawName = req.params.challengeName.toLowerCase()
+        const cleanName = rawName.split(' ').map(capitalize).join(' ')
+        db.Pack.find({"lot_challenges.trait": cleanName})
         .then(pack => {
-            let trait = pack[0].lot_challenges.find(t => t.trait === challengeName)
+            let trait = pack[0].lot_challenges.find(t => t.trait === cleanName)
             dbSuccess(res, trait, "Successful find of trait")
         })
         .catch(err => dbFail(res, err))
@@ -197,6 +197,10 @@ const dbFail = (res, err) => {
 const catchFail = (res, err) => {
     console.error(err)
     res.status(500).json({err: err})
+}
+
+const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 module.exports = {

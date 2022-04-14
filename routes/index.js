@@ -3,12 +3,12 @@ const packRoute = require('./packRoutes')
 const lotTraitsRoute = require("./lotTraitsRoute")
 const simsTraitRoute = require("./simsTraitsRoutes")
 const ambitionsRoute = require("./ambitionsRoute")
-const SkillRoute = require("./skillsRoute")
+const skillRoute = require("./skillsRoute")
 
 router.use("/sims-packs", packRoute)
 router.use("/lot-traits", lotTraitsRoute)
 router.use("/sim-traits", simsTraitRoute)
-// router.use("ambitions", ambitionsRoute)
-router.use("/skills", SkillRoute)
+router.use("/ambitions", ambitionsRoute)
+router.use("/skills", skillRoute)
 
 module.exports = router;
