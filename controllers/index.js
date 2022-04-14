@@ -1,5 +1,6 @@
 module.exports = {
     lotTraits: require('./lotTraitsCtrl'),
     packCtrl: require('./packCtrl'),
-    simTraits: require('./simsTraitsCtrl')
+    simTraits: require('./simsTraitsCtrl'),
+    skills: require('./skillsCtrl')
 }
