@@ -1,10 +1,11 @@
 require('dotenv').config();
-const e = require('express');
 const express = require('express');
 const app = express();
+const cors = require('cors')
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cors())
 
 const routes = require('./routes')
 const apiCheck = require('./middleware/checkKey')
