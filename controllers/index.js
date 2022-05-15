@@ -3,5 +3,6 @@ module.exports = {
     packCtrl: require('./packCtrl'),
     simTraits: require('./simsTraitsCtrl'),
     skills: require('./skillsCtrl'),
-    ambitions: require('./ambitionsCtrl')
+    ambitions: require('./ambitionsCtrl'),
+    color: require("./colorCtrl")
 }

@@ -30,7 +30,7 @@ const getOnePack = async (req, res) => {
 
 const getRandomPack = async (req, res) => {
     try{
-        await db.Pack.find({})
+        await db.Pack.find({}) 
         .then((packs) => {
             let randNumber = Math.floor(Math.random() * packs.length)
             console.log(packs[randNumber])
