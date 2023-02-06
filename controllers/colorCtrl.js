@@ -1,9 +1,14 @@
 const axios = require('axios')
 const parseString = require('xml2js').parseString
 
+const options = {
+    headers: {
+        'Access-Control-Allow-Origin': '*'
+    }
+}
 
 const getPalette = (req, res) => {
-    axios.get('http://www.colourlovers.com/api/palettes/random?format=json')
+    axios.get('http://www.colourlovers.com/api/palettes/random?format=json', options)
     .then((response) => {
         console.log(response)
         parseString(response.data, (err, results) => {
