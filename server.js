@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors')
 
+console.log(process.env.REACT_APP_HEROKU_URL)
+
 /* ======== MIDDLEWARE ========= */
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
