@@ -8,7 +8,7 @@ console.log(process.env.REACT_APP_HEROKU_URL)
 /* ======== MIDDLEWARE ========= */
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(cors({origin: process.env.HEROKU_URL}))
+app.use(cors({origin: process.env.REACT_APP_HEROKU_URL}))
 
 /* ======== INTERNAL MIDDLEWARE ========= */
 const routes = require('./routes')
