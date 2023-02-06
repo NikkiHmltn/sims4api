@@ -5,7 +5,7 @@ const cors = require('cors')
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(cors({origin: 'http://localhost:4000' || 'http:localhost:8000' || process.env.HEROKU_URL}))
+app.use(cors({origin: process.env.HEROKU_URL}))
 
 const routes = require('./routes')
 const apiCheck = require('./middleware/checkKey')
