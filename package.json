@@ -5,7 +5,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.17.3",
     "mongoose": "^6.2.9",
-    "nodemon": "^2.0.19",
-    "xml2js": "^0.4.23"
+    "nice-color-palettes": "^3.0.0",
+    "nodemon": "^2.0.19"
   }
 }
